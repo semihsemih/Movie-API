@@ -50,6 +50,22 @@ router.put('/:movie_id', (req, res, next) => {
     });
 });
 
+router.delete('/:movie_id', (req, res, next) => {
+  const promise = Movie.findByIdAndRemove(req.params.movie_id);
+
+  promise
+    .then(movie => {
+      if (!movie) {
+        next({ message: 'The movie was not found.', code: 99 });
+      }
+
+      res.json(movie);
+    })
+    .catch(err => {
+      res.json(err);
+    });
+});
+
 router.post('/', (req, res, next) => {
   const movie = new Movie(req.body);
 
