@@ -16,6 +16,18 @@ router.get('/', (req, res) => {
     });
 });
 
+router.get('/:movie_id', (req, res) => {
+  const promise = Movie.findById(req.params.movie_id);
+
+  promise
+    .then(movie => {
+      res.json(movie);
+    })
+    .catch(err => {
+      res.json(err.message);
+    });
+});
+
 router.post('/', (req, res, next) => {
   const movie = new Movie(req.body);
 
