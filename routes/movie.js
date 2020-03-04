@@ -18,15 +18,17 @@ router.get('/', (req, res) => {
 
 // Top 10 List
 router.get('/top10', (req, res) => {
-    const promise = Movie.find({}).limit(10).sort({imdbScore: -1});
+  const promise = Movie.find({})
+    .limit(10)
+    .sort({ imdbScore: -1 });
 
-    promise
-        .then(data => {
-            res.json(data);
-        })
-        .catch(err => {
-            res.json(err.message);
-        });
+  promise
+    .then(data => {
+      res.json(data);
+    })
+    .catch(err => {
+      res.json(err.message);
+    });
 });
 
 router.get('/:movie_id', (req, res, next) => {
@@ -83,6 +85,26 @@ router.post('/', (req, res, next) => {
   const movie = new Movie(req.body);
 
   const promise = movie.save();
+
+  promise
+    .then(data => {
+      res.json(data);
+    })
+    .catch(err => {
+      res.json(err.message);
+    });
+});
+
+// Between Years
+router.get('/between/:start_year/:end_year', (req, res) => {
+  const { start_year, end_year } = req.params;
+
+  const promise = Movie.find({
+    year: {
+      $gt: start_year,
+      $lt: end_year
+    }
+  });
 
   promise
     .then(data => {
