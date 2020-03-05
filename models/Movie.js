@@ -10,7 +10,7 @@ const MovieSchema = new Schema({
   country: String,
   year: Number,
   imdbScore: Number,
-  director_id: Schema.Types.ObjectId,
+  directorId: Schema.Types.ObjectId,
   createdAt: {
     type: Date,
     default: Date.now
